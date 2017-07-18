@@ -22542,9 +22542,6 @@ var Counter = function (_React$Component) {
         // If get get a result, return that result's formatted address property
         console.log(response);
 
-        if (response.data.results[0]) {
-          return response.data.results[0].formatted;
-        }
         // If we don't get any results, return an empty string
         return "";
       });
