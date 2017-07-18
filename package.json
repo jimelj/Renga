@@ -1,0 +1,53 @@
+{
+  "name": "renga",
+  "version": "1.0.0",
+  "description": "Renga is a genre of Japanese collaborative poetry. A renga consists of at least two ku or stanzas. The opening stanza of the renga, called the hokku, became the basis for the modern haiku form of poetry. Renga: Meaning collaborative poetry.",
+  "main": "public/index.html",
+  "dependencies": {
+    "axios": "^0.16.2",
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "mongoose": "^4.10.7",
+    "mongoose-unique-validator": "^1.0.5",
+    "morgan": "^1.8.2",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-router": "^4.1.1",
+    "serve-favicon": "^2.4.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.4",
+    "file-loader": "^0.11.2",
+    "node-sass-chokidar": "0.0.3",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.18.2",
+    "url-loader": "^0.5.9",
+    "webpack": "^3.0.0",
+    "webpack-dev-server": "^2.5.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack -w",
+    "dev": "webpack -w & node server",
+    "start": "webpack & node server "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jimelj/Renga.git"
+  },
+  "keywords": [
+    "Poetry",
+    "Haiku",
+    "Art"
+  ],
+  "author": "Jimel J. Joseph",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jimelj/Renga/issues"
+  },
+  "homepage": "https://github.com/jimelj/Renga#readme"
+}
