@@ -1,5 +1,6 @@
 // Include React
 import React from 'react';
+import Counter from './Counter'
 import ReactDOM from 'react-dom'
 import './style.scss';
 
@@ -17,6 +18,7 @@ class Main extends React.Component {
     return (
       <div>
         <h1>i am here</h1>
+        <Counter/>
       </div>
     );
   }
