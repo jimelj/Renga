@@ -1,16 +1,15 @@
 import React from "react";
+import axios from 'axios';
 // import unirest from 'unirest';
 
 
 
 class Counter extends React.Component {
-	// constructor(props) {
- //    super(props);
+	constructor(props) {
+    super(props);
 
- //    this.state = {
- //      term: ''
- //    };
-
+    this.state = {term: '' };
+  }
 	// onFormSubmit(event) {
  //    event.preventDefault();
  //    this.props.fetchWeather(this.state.term);
@@ -19,8 +18,29 @@ class Counter extends React.Component {
  //    });
  //  }
 
-  runQuery(word) {
+ handleChange(event) {
 
+            // this.setState({query: event.target.value});
+            // this.setState({sYear: event.target.value});
+            // this.setState({eYear: event.target.value});
+            let newState = {};
+      newState[event.target.id] = event.target.value;
+      this.setState(newState);
+
+        }
+
+        // handleSubmit(event) {
+        //       // prevent the HTML from trying to submit a form if the user hits "Enter" instead of
+        //       // clicking the button
+        //       event.preventDefault();
+        //
+        //       // Set the parent to have the search term
+        //       // this.props.setQuery(this.state.query,this.state.sYear,this.state.eYear);
+        //       this.setState({term: ''});
+        //   }
+
+  runQuery(word) {
+        console.log('hello i am jimel')
         console.log(word);
 
         // Figure out the geolocation
@@ -31,23 +51,30 @@ class Counter extends React.Component {
         return axios.get(queryURL).then(function (response) {
             // If get get a result, return that result's formatted address property
             	console.log(response);
-            
+
             if (response.data.results[0]) {
                 return response.data.results[0].formatted;
             }
             // If we don't get any results, return an empty string
             return "";
         });
-
+      }
 	render(){
 
 		return(
 			<div>
-				<input type="text"/>
-				<button onPress={this.runQuery.bind(this)} type="submit">Submit</button>
+				<input type="text"
+        id="term"
+        value={this.state.query}
+        onChange={this.handleChange.bind(this)}
+        required
+
+        />
+				<button onClick={() => this.runQuery(this.state.query)} type="button">Submit</button>
 			</div>
 			)
 	}
 }
+
 
 export default Counter
