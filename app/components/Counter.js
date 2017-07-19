@@ -1,6 +1,6 @@
 import React from "react";
-import axios from 'axios';
 // import unirest from 'unirest';
+
 
 
 
@@ -17,6 +17,16 @@ class Counter extends React.Component {
  //      term: ''
  //    });
  //  }
+
+ newCount(word) {
+   word = word.toLowerCase();                                     //word.downcase!
+   if(word.length <= 3) { return 1; }                             //return 1 if word.length <= 3
+     word = word.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '');   //word.sub!(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '')
+     word = word.replace(/^y/, '');                                 //word.sub!(/^y/, '')
+     return word.match(/[aeiouy]{1,2}/g).length;                    //word.scan(/[aeiouy]{1,2}/).size
+ }
+
+
 
  handleChange(event) {
 
@@ -40,22 +50,11 @@ class Counter extends React.Component {
         //   }
 
   runQuery(word) {
-        console.log('hello i am jimel')
-        console.log(word);
+			console.log(word);
+			console.log(this.newCount(word));
 
-        // Figure out the geolocation
-        // const queryURL = "http://api.opencagedata.com/geocode/v1/json?query=" + word + "&pretty=1&key=" + geocodeAPI;
-        const queryURL = `http://api.datamuse.com/words?sp=${word}&md=s&max=1`;
-
-
-        return axios.get(queryURL).then(function (response) {
-            // If get get a result, return that result's formatted address property
-            	console.log(response);
-
-            // If we don't get any results, return an empty string
-            return "";
-        });
       }
+
 	render(){
 
 		return(
@@ -67,7 +66,7 @@ class Counter extends React.Component {
         required
 
         />
-				<button onClick={() => this.runQuery(this.state.query)} type="button">Submit</button>
+				<button onClick={() => this.runQuery(this.state.term)} type="button">Submit</button>
 			</div>
 			)
 	}
