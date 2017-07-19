@@ -8,7 +8,7 @@ class Counter extends React.Component {
 	constructor(props) {
     super(props);
 
-    this.state = {term: '' };
+    this.state = {term: '', syllable:'' };
   }
 	// onFormSubmit(event) {
  //    event.preventDefault();
@@ -53,6 +53,9 @@ class Counter extends React.Component {
   runQuery(word) {
 			console.log(word);
 			console.log(this.newCount(word));
+			this.setState({
+				syllable: this.newCount(word)
+			});
 
       }
 

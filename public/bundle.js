@@ -22492,7 +22492,7 @@ var Counter = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Counter.__proto__ || Object.getPrototypeOf(Counter)).call(this, props));
 
-    _this.state = { term: '' };
+    _this.state = { term: '', syllable: '' };
     return _this;
   }
   // onFormSubmit(event) {
@@ -22542,6 +22542,9 @@ var Counter = function (_React$Component) {
     value: function runQuery(word) {
       console.log(word);
       console.log(this.newCount(word));
+      this.setState({
+        syllable: this.newCount(word)
+      });
     }
   }, {
     key: 'render',
