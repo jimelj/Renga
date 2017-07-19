@@ -19,7 +19,8 @@ class Counter extends React.Component {
  //  }
 
  newCount(word) {
-   word = word.toLowerCase();                                     //word.downcase!
+   word = word.toLowerCase();
+	 word = word.replace(/\s/g, '');                                     //word.downcase!
    if(word.length <= 3) { return 1; }                             //return 1 if word.length <= 3
      word = word.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '');   //word.sub!(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '')
      word = word.replace(/^y/, '');                                 //word.sub!(/^y/, '')

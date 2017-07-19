@@ -22506,7 +22506,8 @@ var Counter = function (_React$Component) {
   _createClass(Counter, [{
     key: 'newCount',
     value: function newCount(word) {
-      word = word.toLowerCase(); //word.downcase!
+      word = word.toLowerCase();
+      word = word.replace(/\s/g, ''); //word.downcase!
       if (word.length <= 3) {
         return 1;
       } //return 1 if word.length <= 3
