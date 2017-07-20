@@ -3,8 +3,11 @@ import React from "react"
 import ReactDOM from "react-dom"
 // import './components/style.scss'
 
-// Include the main Parent Component
-import Main from "./components/Main"
+// Include Card Component
+import { Card, CardMedia, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
+import {Button} from 'react-toolbox/lib/button';
 
-// This code here allows us to render our main component (in this case Parent)
-ReactDOM.render(<Main/>, document.getElementById("app"));
+ReactDOM.render(
+  <Button label="Hello World!" />,
+  document.getElementById('app')
+);
