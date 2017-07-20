@@ -23,8 +23,21 @@ var config = {
         }
       },
       {
-        test: /\.scss$/,
-        use: [ 'style-loader', 'css-loader', 'sass-loader' ]
+        test: /\.s?css$/,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true
+            }
+          },
+          {
+            loader: 'sass-loader'
+          }
+        ]
       },
       {
       test: /\.jpe?g$|\.gif$|\.png$|\.ttf$|\.eot$|\.svg$/,
