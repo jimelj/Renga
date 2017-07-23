@@ -22481,8 +22481,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 
-// import unirest from 'unirest';
-
 
 var Counter = function (_React$Component) {
   _inherits(Counter, _React$Component);
@@ -22492,51 +22490,66 @@ var Counter = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Counter.__proto__ || Object.getPrototypeOf(Counter)).call(this, props));
 
-    _this.state = { term: '', syllable: '' };
+    _this.state = { term: '', syllable: 0, word: '', line: 1, sylCount: 0 };
     return _this;
   }
-  // onFormSubmit(event) {
-  //    event.preventDefault();
-  //    this.props.fetchWeather(this.state.term);
-  //    this.setState({
-  //      term: ''
-  //    });
-  //  }
 
   _createClass(Counter, [{
     key: 'newCount',
     value: function newCount(word) {
-      word = word.toLowerCase();
-      word = word.replace(/\s/g, ''); //word.downcase!
-      if (word.length <= 3) {
-        return 1;
-      } //return 1 if word.length <= 3
-      word = word.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, ''); //word.sub!(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '')
-      word = word.replace(/^y/, ''); //word.sub!(/^y/, '')
-      return word.match(/[aeiouy]{1,2}/g).length; //word.scan(/[aeiouy]{1,2}/).size
+
+      var arrayOfLines = word.match(/[^\r\n]+/g);
+      var arrayOfWords = word.match(/[^\s\n]+/g);
+      var tempArr = [];
+      var Chunks = [];
+      var word;
+      var content;
+
+      for (var i = 0; i < arrayOfLines.length; i++) {
+        var content = arrayOfLines[i];
+
+        content = content.toLowerCase();
+
+        if (content.length <= 3) {
+          return 1;
+        }
+        if (content.length === 0) {
+          return 0;
+        }
+        // if (content.substring(content.length-3 == "ere")){
+        //   return 1;
+        // }
+        content = content.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '').replace(/^y/, '').match(/[aeiouy]{1,2}/g).length;
+
+        console.log("CONTENT: ", content);
+        tempArr.push(content);
+
+        this.setState({
+          word: arrayOfWords[i],
+          line: arrayOfLines.length,
+          sylCount: tempArr
+        });
+      }
     }
   }, {
     key: 'handleChange',
     value: function handleChange(event) {
 
-      // this.setState({query: event.target.value});
-      // this.setState({sYear: event.target.value});
-      // this.setState({eYear: event.target.value});
       var newState = {};
-      newState[event.target.id] = event.target.value;
+
+      newState[event.target.id] = event.target.value; //newState[term] = "sdfsdfsdf"
       this.setState(newState);
+
+      if (!event.target.value) {
+        this.setState({
+          syllable: 0
+        });
+      } else {
+        this.setState({
+          syllable: this.newCount(event.target.value)
+        });
+      }
     }
-
-    // handleSubmit(event) {
-    //       // prevent the HTML from trying to submit a form if the user hits "Enter" instead of
-    //       // clicking the button
-    //       event.preventDefault();
-    //
-    //       // Set the parent to have the search term
-    //       // this.props.setQuery(this.state.query,this.state.sYear,this.state.eYear);
-    //       this.setState({term: ''});
-    //   }
-
   }, {
     key: 'runQuery',
     value: function runQuery(word) {
@@ -22549,24 +22562,52 @@ var Counter = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
 
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         null,
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text',
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('textarea', {
+          type: 'text',
           id: 'term',
           value: this.state.query,
           onChange: this.handleChange.bind(this),
           required: true
-
         }),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'button',
-          { onClick: function onClick() {
-              return _this2.runQuery(_this2.state.term);
-            }, type: 'button' },
-          'Submit'
+          'h3',
+          null,
+          'Current line: ',
+          this.state.line
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'h3',
+          null,
+          this.state.term
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'h2',
+          null,
+          'Syllable count: '
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'h2',
+          null,
+          this.state.sylCount[0]
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'h2',
+          null,
+          this.state.sylCount[1]
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'h2',
+          null,
+          this.state.sylCount[2]
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'h2',
+          null,
+          this.state.sylCount[3]
         )
       );
     }
@@ -22576,6 +22617,9 @@ var Counter = function (_React$Component) {
 }(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["a"] = (Counter);
+
+// This was the submit button
+// <button onClick={() => this.runQuery(this.state.term)} type="button">Submit</button>
 
 /***/ }),
 /* 186 */
