@@ -1,5 +1,4 @@
 import React from "react";
-import './Counter.scss';
 
 
 
@@ -33,12 +32,11 @@ class Counter extends React.Component {
             // if (content.substring(content.length-3 == "ere")){
             //   return 1;
             // }
-            
             content = content.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '')
                 .replace(/^y/, '')
                 .match(/[aeiouy]{1,2}/g).length;
 
-              // console.log("CONTENT: ",content);
+              console.log("CONTENT: ",content);
               tempArr.push(content);
 
             this.setState({
@@ -94,19 +92,11 @@ class Counter extends React.Component {
         onChange={this.handleChange.bind(this)}
         required
         />
-        <h2>Current line: {this.state.line}</h2>
-
-        <div className="poemLines">
-          <h2>{this.state.wordLine[0]}</h2>
-          <h2>{this.state.wordLine[1]}</h2>
-          <h2>{this.state.wordLine[2]}</h2>
-        </div>
-      <div className="sylCount">
-        <h2>{this.state.sylCount[0]}</h2>
-        <h2>{this.state.sylCount[1]}</h2>
-        <h2>{this.state.sylCount[2]}</h2>
+        <h3>Current line: {this.state.line}</h3>
+        <h2>{this.state.wordLine[0]}{this.state.sylCount[0]}</h2>
+        <h2>{this.state.wordLine[1]}{this.state.sylCount[1]}</h2>
+        <h2>{this.state.wordLine[2]}{this.state.sylCount[2]}</h2>
         <h2>{this.state.sylCount[3]}</h2>
-      </div>
 			</div>
 			)
 	}
