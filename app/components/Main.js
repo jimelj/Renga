@@ -1,7 +1,7 @@
 // Include React
 import React from 'react';
 import ReactDOM from 'react-dom'
-import './style.scss';
+// import './style.scss';
 
 // Creating the Main component
 class Main extends React.Component {
