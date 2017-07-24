@@ -1,4 +1,5 @@
 import React from "react";
+import './Counter.scss';
 
 
 
@@ -6,7 +7,7 @@ class Counter extends React.Component {
 	constructor(props) {
     super(props);
 
-    this.state = {term: '', syllable:0, word: '', line: 1, sylCount: 0 };
+    this.state = {term: '', syllable:0, word: '', wordLine: [], line: 1, sylCount: 0 };
   }
 
  newCount(word) {
@@ -39,11 +40,12 @@ class Counter extends React.Component {
               console.log("CONTENT: ",content);
               tempArr.push(content);
 
-          this.setState({
-          word: arrayOfWords[i],
-          line: arrayOfLines.length,
-          sylCount: tempArr
-        })
+            this.setState({
+              word: arrayOfWords[i],
+              line: arrayOfLines.length,
+              sylCount: tempArr,
+              wordLine: arrayOfLines
+            })
 
     }
 
@@ -91,12 +93,19 @@ class Counter extends React.Component {
         onChange={this.handleChange.bind(this)}
         required
         />
-        <h3>Current line: {this.state.line}</h3>
-        <h3>{this.state.term}</h3><h2>Syllable count: </h2>
+        <h2>Current line: {this.state.line}</h2>
+
+        <div className="poemLines">
+          <h2>{this.state.wordLine[0]}</h2>
+          <h2>{this.state.wordLine[1]}</h2>
+          <h2>{this.state.wordLine[2]}</h2>
+        </div>
+      <div className="sylCount">
         <h2>{this.state.sylCount[0]}</h2>
         <h2>{this.state.sylCount[1]}</h2>
         <h2>{this.state.sylCount[2]}</h2>
         <h2>{this.state.sylCount[3]}</h2>
+      </div>
 			</div>
 			)
 	}
