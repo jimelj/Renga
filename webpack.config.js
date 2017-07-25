@@ -19,7 +19,8 @@ var config = {
         include: APP_DIR,
         loader : 'babel-loader',
         query: {
-          presets: ['react', ['es2015', { "modules": false  }]]
+          presets: ['react', ['es2015', { "modules": false  }]],
+          plugins: ["transform-es2015-destructuring", "transform-object-rest-spread"]
         }
       },
       {
