@@ -1,10 +1,5 @@
-// Include the Main React Dependencies
-import React from "react"
-import ReactDOM from "react-dom"
-// import './components/style.scss'
+import React from 'react';
+import ReactDom from 'react-dom';
+import Main from './Main';
 
-// Include the main Parent Component
-import Main from "./components/Main"
-
-// This code here allows us to render our main component (in this case Parent)
-ReactDOM.render(<Main/>, document.getElementById("app"));
+ReactDom.render(<Main />, document.getElementById('app'));
