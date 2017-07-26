@@ -53413,7 +53413,7 @@ var Counter = function (_React$Component) {
     console.log(_this.databaseRef);
 
     _this.state = {
-      term: '', syllable: 0, word: '', wordLine: [], line: 1, sylCount: 0 };
+      term: '', word: '', wordLine: [], line: 1, sylCount: 0 };
     return _this;
   }
 
@@ -53470,7 +53470,7 @@ var Counter = function (_React$Component) {
         });
       } else {
         this.setState({
-          syllable: this.newCount(event.target.value)
+          //  syllable: this.newCount(event.target.value)
         });
       }
     }
@@ -53481,8 +53481,9 @@ var Counter = function (_React$Component) {
       this.setState({
         haiku: word
       });
-
-      this.databaseRef.push().set(this.state.term);
+      var postToSave = this.state;
+      console.log(postToSave);
+      this.databaseRef.push().set(postToSave);
     }
   }, {
     key: 'render',

@@ -30,7 +30,7 @@ class Counter extends React.Component {
 		console.log(this.databaseRef);
 
     this.state = {
-			term: '', syllable:0, word: '', wordLine: [], line: 1, sylCount: 0 };
+			term: '', word: '', wordLine: [], line: 1, sylCount: 0 };
   }
 
  newCount(word) {
@@ -90,7 +90,7 @@ class Counter extends React.Component {
             });
           } else {
             this.setState({
-             syllable: this.newCount(event.target.value)
+            //  syllable: this.newCount(event.target.value)
             });
           }
 
@@ -101,8 +101,9 @@ class Counter extends React.Component {
 			this.setState({
 				haiku: word
 			});
-
-			this.databaseRef.push().set(this.state.term);
+			let postToSave = this.state
+			console.log(postToSave);
+			this.databaseRef.push().set(postToSave);
 
       }
 
