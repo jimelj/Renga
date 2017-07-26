@@ -5,6 +5,7 @@ import './styles/custom-styles.css';
 import HeaderNavigation from './HeaderNavigation';
 import Body from './Body';
 import Footer from './Footer';
+// import Splash from './Splash';
 
 global.React = React;
 
@@ -13,5 +14,6 @@ React.render(
     <HeaderNavigation />
     <Body />
     <Footer />
+    {/*<Splash />*/}
   </div>
   , document.getElementById('app'));
