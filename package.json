@@ -17,12 +17,18 @@
     "passport-local": "^1.0.0",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
+    "react-bootstrap": "^0.31.1",
     "react-dom": "^15.6.1",
     "react-router": "^4.1.1",
+<<<<<<< HEAD
     "react-router-dom": "^4.1.2",
     "react-tap-event-plugin": "^2.0.1",
     "serve-favicon": "^2.4.3",
     "validator": "^8.0.0"
+=======
+    "minimatch": "^3.0.4",
+    "serve-favicon": "^2.4.3"
+>>>>>>> 2ffdf6956b2d3ee008d633da5a9a2791851c3f91
   },
   "devDependencies": {
     "babel-core": "^6.25.0",
