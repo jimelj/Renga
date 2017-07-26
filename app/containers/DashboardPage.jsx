@@ -12,6 +12,8 @@ class DashboardPage extends React.Component {
   constructor(props) {
     super(props);
 
+    // this.databaseRef = this.props.database.ref().child('haikus');
+
     this.state = {
       secretData: '',
       user: {}
@@ -44,7 +46,7 @@ class DashboardPage extends React.Component {
    */
   render() {
     return (
-    <div>  
+    <div>
     <Dashboard secretData={this.state.secretData} user={this.state.user} />
     <Counter/>
   </div>

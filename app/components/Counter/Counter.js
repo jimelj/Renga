@@ -1,13 +1,36 @@
 import React from "react";
 import './Counter.scss';
+import firebase from 'firebase/app';
+import 'firebase/database';
 
+
+
+// console.log('app', this.app);
+// console.log('database', this.database);
 
 
 class Counter extends React.Component {
 	constructor(props) {
     super(props);
 
-    this.state = {term: '', syllable:0, word: '', wordLine: [], line: 1, sylCount: 0 };
+		var config = {
+		   apiKey: "AIzaSyDAzfuhm0T1zgy7FllNwQuBUyHcLZCm5-A",
+		   authDomain: "renga-7eff3.firebaseapp.com",
+		   databaseURL: "https://renga-7eff3.firebaseio.com",
+		   projectId: "renga-7eff3",
+		   storageBucket: "",
+		   messagingSenderId: "378335852054"
+		 };
+
+		this.app = firebase.initializeApp(config);
+		this.database = this.app.database();
+		console.log(this.database);
+
+		this.databaseRef = this.database.ref().child('haikus');
+		console.log(this.databaseRef);
+
+    this.state = {
+			term: '', syllable:0, word: '', wordLine: [], line: 1, sylCount: 0 };
   }
 
  newCount(word) {
@@ -21,9 +44,9 @@ class Counter extends React.Component {
 
     for (var i = 0; i < arrayOfLines.length; i++) {
             var content = arrayOfLines[i];
-           
+
             content = content.toLowerCase();
-            
+
             if (content.length <= 3) {
                 return 1;
             }
@@ -75,10 +98,11 @@ class Counter extends React.Component {
 
   runQuery(word) {
 			console.log(word);
-			console.log(this.newCount(word));
 			this.setState({
-				syllable: this.newCount(word)
+				haiku: word
 			});
+
+			this.databaseRef.push().set(this.state.term);
 
       }
 
@@ -86,13 +110,14 @@ class Counter extends React.Component {
 
 		return(
 			<div>
-				<textarea 
+				<textarea
         type="text"
         id="term"
         value={this.state.query}
         onChange={this.handleChange.bind(this)}
         required
         />
+				<button onClick={() => this.runQuery(this.state.term)} type="button">Submit</button>
         <h2>Current line: {this.state.line}</h2>
 
         <div className="poemLines">
@@ -115,4 +140,4 @@ class Counter extends React.Component {
 export default Counter
 
 // This was the submit button
-// <button onClick={() => this.runQuery(this.state.term)} type="button">Submit</button>
+//
