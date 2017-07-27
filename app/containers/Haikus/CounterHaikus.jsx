@@ -44,8 +44,10 @@ class CounterHaikus extends React.Component {
 
 		return(
       <div>
-        <div className="haikuContent">{this.haikuContent}</div>
-        <button onClick={this.sendPoem}>Edit</button>
+        <div className="haikuWrap">
+          <div className="haikuContent">{this.haikuContent}</div>
+          <button onClick={this.sendPoem}>Edit</button>
+        </div>
       </div>
 			)
 	}

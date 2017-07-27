@@ -29,13 +29,13 @@ class Counter extends React.Component {
 
 		this.app = firebase.initializeApp(config);
 		this.database = this.app.database();
-		console.log(this.database);
+		// console.log(this.database);
 
 		this.databaseRef = this.database.ref().child('haikus');
-		console.log(this.databaseRef);
+		// console.log(this.databaseRef);
 
     this.state = {
-			term: '', wordLine: [], line: 1, sylCount: 0, haikus: [], textVal: "" };
+			term: '', wordLine: [], line: 1, sylCount: 0, haikus: []};
 
   }
 
@@ -151,26 +151,26 @@ class Counter extends React.Component {
               }
 
   runQuery(word) {
-			console.log(word);
+			// console.log(word);
 			this.setState({
 				haiku: word
 			});
 			let postToSave = this.state
-			console.log(postToSave);
+			// console.log(postToSave);
 			this.databaseRef.push().set(postToSave);
 
 
       }
 
   render(){
-
+    let poemtxt = this.state.textVal;
+    console.log(poemtxt);
 		return(
 			<div>
 				<textarea
 
         type="text"
         id="term"
-        value={this.state.textVal}
         onChange={this.handleChange.bind(this)}
         required
         />

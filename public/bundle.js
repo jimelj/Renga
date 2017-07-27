@@ -22892,13 +22892,13 @@ var Counter = function (_React$Component) {
 
     _this.app = __WEBPACK_IMPORTED_MODULE_2_firebase_app___default.a.initializeApp(config);
     _this.database = _this.app.database();
-    console.log(_this.database);
+    // console.log(this.database);
 
     _this.databaseRef = _this.database.ref().child('haikus');
-    console.log(_this.databaseRef);
+    // console.log(this.databaseRef);
 
     _this.state = {
-      term: '', wordLine: [], line: 1, sylCount: 0, haikus: [], textVal: "" };
+      term: '', wordLine: [], line: 1, sylCount: 0, haikus: [] };
 
     return _this;
   }
@@ -23014,12 +23014,12 @@ var Counter = function (_React$Component) {
   }, {
     key: 'runQuery',
     value: function runQuery(word) {
-      console.log(word);
+      // console.log(word);
       this.setState({
         haiku: word
       });
       var postToSave = this.state;
-      console.log(postToSave);
+      // console.log(postToSave);
       this.databaseRef.push().set(postToSave);
     }
   }, {
@@ -23027,6 +23027,8 @@ var Counter = function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
+      var poemtxt = this.state.textVal;
+      console.log(poemtxt);
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         null,
@@ -23034,7 +23036,6 @@ var Counter = function (_React$Component) {
 
           type: 'text',
           id: 'term',
-          value: this.state.textVal,
           onChange: this.handleChange.bind(this),
           required: true
         }),
@@ -23158,7 +23159,7 @@ exports = module.exports = __webpack_require__(184)(undefined);
 
 
 // module
-exports.push([module.i, ".poemLines {\n  float: left;\n  padding: 25px;\n  width: 400px;\n  /*border: 2px solid red;*/\n  background-color: #A1F0E9;\n  height: 220px; }\n\n.sylCount {\n  float: left;\n  padding: 25px;\n  width: 40px;\n  background-color: #E7F28B;\n  height: 220px; }\n", ""]);
+exports.push([module.i, ".poemLines {\n  display: block;\n  padding: 25px;\n  width: 400px;\n  /*border: 2px solid red;*/\n  background-color: #A1F0E9;\n  height: 220px; }\n\n.sylCount {\n  float: left;\n  padding: 25px;\n  width: 40px;\n  background-color: #E7F28B;\n  height: 220px; }\n\n.poemGallery {\n  position: relative; }\n", ""]);
 
 // exports
 
@@ -62882,13 +62883,17 @@ var CounterHaikus = function (_React$Component) {
         null,
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
-          { className: 'haikuContent' },
-          this.haikuContent
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'button',
-          { onClick: this.sendPoem },
-          'Edit'
+          { className: 'haikuWrap' },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'haikuContent' },
+            this.haikuContent
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'button',
+            { onClick: this.sendPoem },
+            'Edit'
+          )
         )
       );
     }
@@ -62939,7 +62944,7 @@ exports = module.exports = __webpack_require__(184)(undefined);
 
 
 // module
-exports.push([module.i, ".poemLines {\n  float: left;\n  padding: 25px;\n  width: 400px;\n  /*border: 2px solid red;*/\n  background-color: #A1F0E9;\n  height: 220px; }\n\n.sylCount {\n  float: left;\n  padding: 25px;\n  width: 40px;\n  background-color: #E7F28B;\n  height: 220px; }\n\n.haikuContent {\n  border: 1px solid red; }\n", ""]);
+exports.push([module.i, ".poemLines {\n  float: left;\n  padding: 25px;\n  width: 400px;\n  /*border: 2px solid red;*/\n  background-color: #A1F0E9;\n  height: 220px; }\n\n.sylCount {\n  float: left;\n  padding: 25px;\n  width: 40px;\n  background-color: #E7F28B;\n  height: 220px; }\n\n.haikuContent {\n  border: 1px solid red; }\n\n.haikuWrap {\n  height: 100px;\n  width: 250px;\n  background-color: green;\n  border-radius: 15px;\n  margin: 20px;\n  display: inline-block; }\n", ""]);
 
 // exports
 
