@@ -10,8 +10,9 @@ var path = require('path');
 const passport = require('passport');
 const config = require('./config');
 
+var uri = process.env.MONGODB_URI || config.dbUri;
 // connect to the database and load models
-require('./models').connect(process.env.MONGODB_URI);
+require('./models').connect(uri);
 
 
 
