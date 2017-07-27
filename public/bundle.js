@@ -46821,6 +46821,7 @@ var HomePage = function (_React$Component) {
 ;
 
 /* harmony default export */ __webpack_exports__["a"] = (HomePage);
+'';
 
 /***/ }),
 /* 457 */
