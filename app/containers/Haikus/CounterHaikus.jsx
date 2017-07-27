@@ -6,6 +6,8 @@ import './CounterHaikus.scss';
 class CounterHaikus extends React.Component {
 	constructor(props) {
     super(props);
+    this.haikuContent = props.haikuContent; 
+        this.haikuId = props.haikuId; 
 
     this.databaseRef = this.props.databaseRef;
     this.updateLocalState = this.updateLocalState.bind(this);
@@ -21,7 +23,7 @@ class CounterHaikus extends React.Component {
     this.databaseRef.on('child_added', snapshot => {
       const response = snapshot.val();
       updateLocalState(response);
-      console.log(response);
+      console.log("cWM Resp=",response);
     });
   }
 
@@ -37,7 +39,9 @@ class CounterHaikus extends React.Component {
 	render(){
 
 		return(
-      <h1>hi</h1>
+      <div>
+        <div className="haikuContent">{this.haikuContent}</div>
+      </div>
 			)
 	}
 }

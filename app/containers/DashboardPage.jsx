@@ -4,6 +4,8 @@ import Dashboard from '../components/Dashboard.jsx';
 import Counter from '../components/Counter/Counter';
 
 
+
+
 class DashboardPage extends React.Component {
 
   /**
@@ -45,12 +47,14 @@ class DashboardPage extends React.Component {
    * Render the component.
    */
   render() {
+
     return (
     <div>
     <Dashboard secretData={this.state.secretData} user={this.state.user} />
     <Counter/>
   </div>
     );
+
   }
 
 }

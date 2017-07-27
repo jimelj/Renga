@@ -3,6 +3,7 @@ import './Counter.scss';
 import firebase from 'firebase/app';
 import 'firebase/database';
 import CounterHaikus from '../../containers/Haikus/CounterHaikus';
+import Gallery from '../Gallery/Gallery';
 
 
 
@@ -12,16 +13,17 @@ import CounterHaikus from '../../containers/Haikus/CounterHaikus';
 
 
 class Counter extends React.Component {
-	constructor(props) {
+  constructor(props) {
     super(props);
 
+
 		var config = {
-		   apiKey: "AIzaSyDAzfuhm0T1zgy7FllNwQuBUyHcLZCm5-A",
-		   authDomain: "renga-7eff3.firebaseapp.com",
-		   databaseURL: "https://renga-7eff3.firebaseio.com",
-		   projectId: "renga-7eff3",
-		   storageBucket: "",
-		   messagingSenderId: "378335852054"
+		   apiKey: "AIzaSyBsooAPWrtbiK6R1DnW4vWWia3HMj8HiZU",
+    authDomain: "renga-b3c41.firebaseapp.com",
+    databaseURL: "https://renga-b3c41.firebaseio.com",
+    projectId: "renga-b3c41",
+    storageBucket: "renga-b3c41.appspot.com",
+    messagingSenderId: "609961053602"
 		 };
 
 		this.app = firebase.initializeApp(config);
@@ -32,7 +34,36 @@ class Counter extends React.Component {
 		console.log(this.databaseRef);
 
     this.state = {
-			term: '', word: '', wordLine: [], line: 1, sylCount: 0 };
+			term: '', wordLine: [], line: 1, sylCount: 0, haikus: [] };
+
+  }
+
+    componentWillMount(){
+    const previousPoems = this.state.haikus;
+
+    // DataSnapshot
+    this.databaseRef.on('child_added', snap => {
+      previousPoems.push({
+        id: snap.key,
+        term: snap.val().term,
+      })
+
+      this.setState({
+        haikus: previousPoems
+      })
+    })
+
+    this.databaseRef.on('child_removed', snap => {
+      for(var i=0; i < previousPoems.length; i++){
+        if(previousPoems[i].id === snap.key){
+          previousPoems.splice(i, 1);
+        }
+      }
+
+      this.setState({
+        haikus: previousPoems
+      })
+    })
   }
 
  newCount(word) {
@@ -40,8 +71,8 @@ class Counter extends React.Component {
     var arrayOfLines = word.match(/[^\r\n]+/g);
     var arrayOfWords =  word.match(/[^\s\n]+/g);
         var tempArr = [];
-        var Chunks = [];
-        var word;
+        // var Chunks = [];
+        // var word;
         var content;
 
     for (var i = 0; i < arrayOfLines.length; i++) {
@@ -58,18 +89,32 @@ class Counter extends React.Component {
             // if (content.substring(content.length-3 == "ere")){
             //   return 1;
             // }
+            
             content = content.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '')
                 .replace(/^y/, '')
                 .match(/[aeiouy]{1,2}/g).length;
 
-              console.log("CONTENT: ",content);
+              // console.log("CONTENT: ",content);
               tempArr.push(content);
 
+              var wordObj = {
+                word: arrayOfWords[i],
+                syllable: 0
+              }
+              // var singleSyl = count(arrayOfWords[i]);
+
+              // var wordObj = {
+              //   word: arrayOfWords[v],
+              //   syllable:singleSyl              } 
+
+              // this.state.wordBundle.push(wordObj)  
+
             this.setState({
-              word: arrayOfWords,
+              // word: arrayOfWords,
               line: arrayOfLines.length,
               sylCount: tempArr,
-              wordLine: arrayOfLines
+              wordLine: arrayOfLines,
+              wordArr: arrayOfWords,
             })
 
     }
@@ -107,20 +152,24 @@ class Counter extends React.Component {
 			console.log(postToSave);
 			this.databaseRef.push().set(postToSave);
 
+
       }
 
-	render(){
+  render(){
 
 		return(
 			<div>
 				<textarea
+
         type="text"
         id="term"
         value={this.state.query}
         onChange={this.handleChange.bind(this)}
         required
         />
+
 				<button onClick={() => this.runQuery(this.state.term)} type="button">Submit</button>
+
         <h2>Current line: {this.state.line}</h2>
 
         <div className="poemLines">
@@ -134,10 +183,24 @@ class Counter extends React.Component {
         <h2>{this.state.sylCount[2]}</h2>
         <h2>{this.state.sylCount[3]}</h2>
       </div>
-			<CounterHaikus databaseRef={this.databaseRef}/>
+      
+      <div className="poemGallery">
+          {
+            this.state.haikus.map((haiku) => {
+              return (
+                <CounterHaikus haikuContent={haiku.term} 
+                haikuId={haiku.id} 
+                key={haiku.id}
+                databaseRef={this.databaseRef}/>
+              )
+            })
+          }
+        </div>
+      <Gallery/>
 			</div>
 			)
 	}
+
 }
 
 

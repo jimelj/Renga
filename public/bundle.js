@@ -53738,6 +53738,7 @@ var DashboardPage = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         null,
@@ -53813,6 +53814,7 @@ Dashboard.propTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase_database__ = __webpack_require__(522);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase_database___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_firebase_database__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__containers_Haikus_CounterHaikus__ = __webpack_require__(562);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Gallery_Gallery__ = __webpack_require__(565);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -53820,6 +53822,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -53840,12 +53843,12 @@ var Counter = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Counter.__proto__ || Object.getPrototypeOf(Counter)).call(this, props));
 
     var config = {
-      apiKey: "AIzaSyDAzfuhm0T1zgy7FllNwQuBUyHcLZCm5-A",
-      authDomain: "renga-7eff3.firebaseapp.com",
-      databaseURL: "https://renga-7eff3.firebaseio.com",
-      projectId: "renga-7eff3",
-      storageBucket: "",
-      messagingSenderId: "378335852054"
+      apiKey: "AIzaSyBsooAPWrtbiK6R1DnW4vWWia3HMj8HiZU",
+      authDomain: "renga-b3c41.firebaseapp.com",
+      databaseURL: "https://renga-b3c41.firebaseio.com",
+      projectId: "renga-b3c41",
+      storageBucket: "renga-b3c41.appspot.com",
+      messagingSenderId: "609961053602"
     };
 
     _this.app = __WEBPACK_IMPORTED_MODULE_2_firebase_app___default.a.initializeApp(config);
@@ -53856,19 +53859,51 @@ var Counter = function (_React$Component) {
     console.log(_this.databaseRef);
 
     _this.state = {
-      term: '', word: '', wordLine: [], line: 1, sylCount: 0 };
+      term: '', wordLine: [], line: 1, sylCount: 0, haikus: [] };
+
     return _this;
   }
 
   _createClass(Counter, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      var _this2 = this;
+
+      var previousPoems = this.state.haikus;
+
+      // DataSnapshot
+      this.databaseRef.on('child_added', function (snap) {
+        previousPoems.push({
+          id: snap.key,
+          term: snap.val().term
+        });
+
+        _this2.setState({
+          haikus: previousPoems
+        });
+      });
+
+      this.databaseRef.on('child_removed', function (snap) {
+        for (var i = 0; i < previousPoems.length; i++) {
+          if (previousPoems[i].id === snap.key) {
+            previousPoems.splice(i, 1);
+          }
+        }
+
+        _this2.setState({
+          haikus: previousPoems
+        });
+      });
+    }
+  }, {
     key: 'newCount',
     value: function newCount(word) {
 
       var arrayOfLines = word.match(/[^\r\n]+/g);
       var arrayOfWords = word.match(/[^\s\n]+/g);
       var tempArr = [];
-      var Chunks = [];
-      var word;
+      // var Chunks = [];
+      // var word;
       var content;
 
       for (var i = 0; i < arrayOfLines.length; i++) {
@@ -53885,16 +53920,29 @@ var Counter = function (_React$Component) {
         // if (content.substring(content.length-3 == "ere")){
         //   return 1;
         // }
+
         content = content.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '').replace(/^y/, '').match(/[aeiouy]{1,2}/g).length;
 
-        console.log("CONTENT: ", content);
+        // console.log("CONTENT: ",content);
         tempArr.push(content);
 
-        this.setState({
-          word: arrayOfWords,
+        var wordObj = {
+          word: arrayOfWords[i],
+          syllable: 0
+          // var singleSyl = count(arrayOfWords[i]);
+
+          // var wordObj = {
+          //   word: arrayOfWords[v],
+          //   syllable:singleSyl              } 
+
+          // this.state.wordBundle.push(wordObj)  
+
+        };this.setState({
+          // word: arrayOfWords,
           line: arrayOfLines.length,
           sylCount: tempArr,
-          wordLine: arrayOfLines
+          wordLine: arrayOfLines,
+          wordArr: arrayOfWords
         });
       }
     }
@@ -53931,12 +53979,13 @@ var Counter = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         null,
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('textarea', {
+
           type: 'text',
           id: 'term',
           value: this.state.query,
@@ -53946,7 +53995,7 @@ var Counter = function (_React$Component) {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'button',
           { onClick: function onClick() {
-              return _this2.runQuery(_this2.state.term);
+              return _this3.runQuery(_this3.state.term);
             }, type: 'button' },
           'Submit'
         ),
@@ -53999,7 +54048,17 @@ var Counter = function (_React$Component) {
             this.state.sylCount[3]
           )
         ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__containers_Haikus_CounterHaikus__["a" /* default */], { databaseRef: this.databaseRef })
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'poemGallery' },
+          this.state.haikus.map(function (haiku) {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__containers_Haikus_CounterHaikus__["a" /* default */], { haikuContent: haiku.term,
+              haikuId: haiku.id,
+              key: haiku.id,
+              databaseRef: _this3.databaseRef });
+          })
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__Gallery_Gallery__["a" /* default */], null)
       );
     }
   }]);
@@ -62763,6 +62822,9 @@ var CounterHaikus = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (CounterHaikus.__proto__ || Object.getPrototypeOf(CounterHaikus)).call(this, props));
 
+    _this.haikuContent = props.haikuContent;
+    _this.haikuId = props.haikuId;
+
     _this.databaseRef = _this.props.databaseRef;
     _this.updateLocalState = _this.updateLocalState.bind(_this);
 
@@ -62781,7 +62843,7 @@ var CounterHaikus = function (_React$Component) {
       this.databaseRef.on('child_added', function (snapshot) {
         var response = snapshot.val();
         updateLocalState(response);
-        console.log(response);
+        console.log("cWM Resp=", response);
       });
     }
   }, {
@@ -62798,9 +62860,13 @@ var CounterHaikus = function (_React$Component) {
     value: function render() {
 
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'h1',
+        'div',
         null,
-        'hi'
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'haikuContent' },
+          this.haikuContent
+        )
       );
     }
   }]);
@@ -62850,10 +62916,61 @@ exports = module.exports = __webpack_require__(213)(undefined);
 
 
 // module
-exports.push([module.i, ".poemLines {\n  float: left;\n  padding: 25px;\n  width: 400px;\n  /*border: 2px solid red;*/\n  background-color: #A1F0E9;\n  height: 220px; }\n\n.sylCount {\n  float: left;\n  padding: 25px;\n  width: 40px;\n  background-color: #E7F28B;\n  height: 220px; }\n", ""]);
+exports.push([module.i, ".poemLines {\n  float: left;\n  padding: 25px;\n  width: 400px;\n  /*border: 2px solid red;*/\n  background-color: #A1F0E9;\n  height: 220px; }\n\n.sylCount {\n  float: left;\n  padding: 25px;\n  width: 40px;\n  background-color: #E7F28B;\n  height: 220px; }\n\n.haikuContent {\n  border: 1px solid red; }\n", ""]);
 
 // exports
 
+
+/***/ }),
+/* 565 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+// import './Gallery.scss';
+// import firebase from 'firebase/app';
+// import 'firebase/database';
+// import CounterHaikus from '../../containers/Haikus/CounterHaikus';
+
+
+var Gallery = function (_React$Component) {
+  _inherits(Gallery, _React$Component);
+
+  function Gallery(props) {
+    _classCallCheck(this, Gallery);
+
+    return _possibleConstructorReturn(this, (Gallery.__proto__ || Object.getPrototypeOf(Gallery)).call(this, props));
+  }
+
+  _createClass(Gallery, [{
+    key: "render",
+    value: function render() {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "div",
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          "h3",
+          null,
+          "TESTINGGGG"
+        )
+      );
+    }
+  }]);
+
+  return Gallery;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["a"] = (Gallery);
 
 /***/ })
 /******/ ]);
