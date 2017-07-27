@@ -53371,6 +53371,7 @@ Dashboard.propTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_firebase_app___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_firebase_app__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase_database__ = __webpack_require__(522);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase_database___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_firebase_database__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__containers_Haikus_CounterHaikus__ = __webpack_require__(566);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -53378,6 +53379,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -53448,7 +53450,7 @@ var Counter = function (_React$Component) {
         tempArr.push(content);
 
         this.setState({
-          word: arrayOfWords[i],
+          word: arrayOfWords,
           line: arrayOfLines.length,
           sylCount: tempArr,
           wordLine: arrayOfLines
@@ -53463,16 +53465,16 @@ var Counter = function (_React$Component) {
 
       newState[event.target.id] = event.target.value; //newState[term] = "sdfsdfsdf"
       this.setState(newState);
-
-      if (!event.target.value) {
-        this.setState({
-          syllable: 0
-        });
-      } else {
-        this.setState({
-          //  syllable: this.newCount(event.target.value)
-        });
-      }
+      this.newCount(event.target.value);
+      // if(!event.target.value){
+      // this.setState({
+      //        syllable: 0
+      //       });
+      //     } else {
+      //       this.setState({
+      //       //  syllable:
+      //       });
+      //     }
     }
   }, {
     key: 'runQuery',
@@ -53555,7 +53557,8 @@ var Counter = function (_React$Component) {
             null,
             this.state.sylCount[3]
           )
-        )
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__containers_Haikus_CounterHaikus__["a" /* default */], { databaseRef: this.databaseRef })
       );
     }
   }]);
@@ -62730,6 +62733,130 @@ var forceRestClient = exports.forceRestClient = function forceRestClient(_forceR
     _RepoManager.RepoManager.getInstance().forceRestClient(_forceRestClient);
 };
 //# sourceMappingURL=test_access.js.map
+
+
+/***/ }),
+/* 562 */,
+/* 563 */,
+/* 564 */,
+/* 565 */,
+/* 566 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CounterHaikus_scss__ = __webpack_require__(567);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CounterHaikus_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__CounterHaikus_scss__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+var CounterHaikus = function (_React$Component) {
+  _inherits(CounterHaikus, _React$Component);
+
+  function CounterHaikus(props) {
+    _classCallCheck(this, CounterHaikus);
+
+    var _this = _possibleConstructorReturn(this, (CounterHaikus.__proto__ || Object.getPrototypeOf(CounterHaikus)).call(this, props));
+
+    _this.databaseRef = _this.props.databaseRef;
+    _this.updateLocalState = _this.updateLocalState.bind(_this);
+
+    _this.state = {
+      haikus: []
+    };
+
+    return _this;
+  }
+
+  _createClass(CounterHaikus, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      var updateLocalState = this.updateLocalState;
+
+      this.databaseRef.on('child_added', function (snapshot) {
+        var response = snapshot.val();
+        updateLocalState(response);
+        console.log(response);
+      });
+    }
+  }, {
+    key: 'updateLocalState',
+    value: function updateLocalState(response) {
+      var haikus = this.state.haikus;
+      haikus.push(response.haikus);
+      this.setState({
+        haikus: haikus
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'h1',
+        null,
+        'hi'
+      );
+    }
+  }]);
+
+  return CounterHaikus;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["a"] = (CounterHaikus);
+
+/***/ }),
+/* 567 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(568);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(514)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/lib/loader.js!./CounterHaikus.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/sass-loader/lib/loader.js!./CounterHaikus.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 568 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(513)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, ".poemLines {\n  float: left;\n  padding: 25px;\n  width: 400px;\n  /*border: 2px solid red;*/\n  background-color: #A1F0E9;\n  height: 220px; }\n\n.sylCount {\n  float: left;\n  padding: 25px;\n  width: 40px;\n  background-color: #E7F28B;\n  height: 220px; }\n", ""]);
+
+// exports
 
 
 /***/ })

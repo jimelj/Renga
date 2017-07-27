@@ -2,6 +2,8 @@ import React from "react";
 import './Counter.scss';
 import firebase from 'firebase/app';
 import 'firebase/database';
+import CounterHaikus from '../../containers/Haikus/CounterHaikus';
+
 
 
 
@@ -64,7 +66,7 @@ class Counter extends React.Component {
               tempArr.push(content);
 
             this.setState({
-              word: arrayOfWords[i],
+              word: arrayOfWords,
               line: arrayOfLines.length,
               sylCount: tempArr,
               wordLine: arrayOfLines
@@ -83,16 +85,16 @@ class Counter extends React.Component {
 
       newState[event.target.id] = event.target.value;   //newState[term] = "sdfsdfsdf"
       this.setState(newState);
-
-      if(!event.target.value){
-      this.setState({
-             syllable: 0
-            });
-          } else {
-            this.setState({
-            //  syllable: this.newCount(event.target.value)
-            });
-          }
+			this.newCount(event.target.value);
+      // if(!event.target.value){
+      // this.setState({
+      //        syllable: 0
+      //       });
+      //     } else {
+      //       this.setState({
+      //       //  syllable:
+      //       });
+      //     }
 
               }
 
@@ -132,6 +134,7 @@ class Counter extends React.Component {
         <h2>{this.state.sylCount[2]}</h2>
         <h2>{this.state.sylCount[3]}</h2>
       </div>
+			<CounterHaikus databaseRef={this.databaseRef}/>
 			</div>
 			)
 	}
