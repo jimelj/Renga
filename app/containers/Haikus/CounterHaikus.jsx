@@ -1,0 +1,50 @@
+import React from "react";
+import './CounterHaikus.scss';
+
+
+
+class CounterHaikus extends React.Component {
+	constructor(props) {
+    super(props);
+    this.haikuContent = props.haikuContent; 
+        this.haikuId = props.haikuId; 
+
+    this.databaseRef = this.props.databaseRef;
+    this.updateLocalState = this.updateLocalState.bind(this);
+
+    this.state = {
+      haikus: [],
+    }
+
+  }
+
+  componentWillMount(){
+    const {updateLocalState} = this;
+    this.databaseRef.on('child_added', snapshot => {
+      const response = snapshot.val();
+      updateLocalState(response);
+      console.log("cWM Resp=",response);
+    });
+  }
+
+  updateLocalState(response) {
+    const haikus = this.state.haikus;
+    haikus.push(response.haikus);
+    this.setState({
+      haikus: haikus,
+    });
+  }
+
+
+	render(){
+
+		return(
+      <div>
+        <div className="haikuContent">{this.haikuContent}</div>
+      </div>
+			)
+	}
+}
+
+
+export default CounterHaikus

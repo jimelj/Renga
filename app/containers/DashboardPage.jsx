@@ -5,6 +5,7 @@ import Counter from '../components/Counter/Counter';
 
 
 
+
 class DashboardPage extends React.Component {
 
   /**
@@ -12,6 +13,8 @@ class DashboardPage extends React.Component {
    */
   constructor(props) {
     super(props);
+
+    // this.databaseRef = this.props.database.ref().child('haikus');
 
     this.state = {
       secretData: '',
@@ -46,7 +49,7 @@ class DashboardPage extends React.Component {
   render() {
 
     return (
-    <div>  
+    <div>
     <Dashboard secretData={this.state.secretData} user={this.state.user} />
     <Counter/>
   </div>

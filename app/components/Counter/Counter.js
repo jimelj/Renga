@@ -2,13 +2,68 @@ import React from "react";
 import './Counter.scss';
 import firebase from 'firebase/app';
 import 'firebase/database';
+import CounterHaikus from '../../containers/Haikus/CounterHaikus';
+import Gallery from '../Gallery/Gallery';
+
+
+
+
+// console.log('app', this.app);
+// console.log('database', this.database);
 
 
 class Counter extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {term: '', syllable:0, word: '', wordLine: [], wordArr: [],line: 1, sylCount: 0, wordBundle:[]};
+
+		var config = {
+		   apiKey: "AIzaSyBsooAPWrtbiK6R1DnW4vWWia3HMj8HiZU",
+    authDomain: "renga-b3c41.firebaseapp.com",
+    databaseURL: "https://renga-b3c41.firebaseio.com",
+    projectId: "renga-b3c41",
+    storageBucket: "renga-b3c41.appspot.com",
+    messagingSenderId: "609961053602"
+		 };
+
+		this.app = firebase.initializeApp(config);
+		this.database = this.app.database();
+		console.log(this.database);
+
+		this.databaseRef = this.database.ref().child('haikus');
+		console.log(this.databaseRef);
+
+    this.state = {
+			term: '', wordLine: [], line: 1, sylCount: 0, haikus: [] };
+
+  }
+
+    componentWillMount(){
+    const previousPoems = this.state.haikus;
+
+    // DataSnapshot
+    this.databaseRef.on('child_added', snap => {
+      previousPoems.push({
+        id: snap.key,
+        term: snap.val().term,
+      })
+
+      this.setState({
+        haikus: previousPoems
+      })
+    })
+
+    this.databaseRef.on('child_removed', snap => {
+      for(var i=0; i < previousPoems.length; i++){
+        if(previousPoems[i].id === snap.key){
+          previousPoems.splice(i, 1);
+        }
+      }
+
+      this.setState({
+        haikus: previousPoems
+      })
+    })
   }
 
  newCount(word) {
@@ -22,9 +77,9 @@ class Counter extends React.Component {
 
     for (var i = 0; i < arrayOfLines.length; i++) {
             var content = arrayOfLines[i];
-           
+
             content = content.toLowerCase();
-            
+
             if (content.length <= 3) {
                 return 1;
             }
@@ -52,10 +107,10 @@ class Counter extends React.Component {
               //   word: arrayOfWords[v],
               //   syllable:singleSyl              } 
 
-              this.state.wordBundle.push(wordObj)  
+              // this.state.wordBundle.push(wordObj)  
 
             this.setState({
-              word: arrayOfWords[i],
+              // word: arrayOfWords,
               line: arrayOfLines.length,
               sylCount: tempArr,
               wordLine: arrayOfLines,
@@ -67,29 +122,7 @@ class Counter extends React.Component {
 
  }
 
-//   count(word) {
-    
-//             var content = arrayOfLines[i];
-           
-//             word = word.toLowerCase();
-            
-//             if (word.length <= 3) {
-//                 return 1;
-//             }
-//             if (word.length === 0) {
-//                 return 0;
-//             }
-//             // if (word.substring(word.length-3 == "ere")){
-//             //   return 1;
-//             // }
-            
-//             word = word.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '')
-//                 .replace(/^y/, '')
-//                 .match(/[aeiouy]{1,2}/g).length;
 
-//                 return word;
-  
-// }
 
  handleChange(event) {
 
@@ -97,40 +130,46 @@ class Counter extends React.Component {
 
       newState[event.target.id] = event.target.value;   //newState[term] = "sdfsdfsdf"
       this.setState(newState);
-
-      if(!event.target.value){
-      this.setState({
-             syllable: 0
-            });
-          } else {
-            this.setState({
-             syllable: this.newCount(event.target.value)
-            });
-          }
+			this.newCount(event.target.value);
+      // if(!event.target.value){
+      // this.setState({
+      //        syllable: 0
+      //       });
+      //     } else {
+      //       this.setState({
+      //       //  syllable:
+      //       });
+      //     }
 
               }
 
   runQuery(word) {
-      console.log(word);
-      // console.log(this.newCount(word));
-      this.setState({
-        haiku: word
-      });
+			console.log(word);
+			this.setState({
+				haiku: word
+			});
+			let postToSave = this.state
+			console.log(postToSave);
+			this.databaseRef.push().set(postToSave);
+
 
       }
 
   render(){
 
-    return(
-      <div>
-        <textarea 
+		return(
+			<div>
+				<textarea
+
         type="text"
         id="term"
         value={this.state.query}
         onChange={this.handleChange.bind(this)}
         required
         />
-        <button onClick={() => this.runQuery(this.state.term)} type="button">Submit</button>
+
+				<button onClick={() => this.runQuery(this.state.term)} type="button">Submit</button>
+
         <h2>Current line: {this.state.line}</h2>
 
         <div className="poemLines">
@@ -144,13 +183,28 @@ class Counter extends React.Component {
         <h2>{this.state.sylCount[2]}</h2>
         <h2>{this.state.sylCount[3]}</h2>
       </div>
-      </div>
-      )
-  }
+      
+      <div className="poemGallery">
+          {
+            this.state.haikus.map((haiku) => {
+              return (
+                <CounterHaikus haikuContent={haiku.term} 
+                haikuId={haiku.id} 
+                key={haiku.id}
+                databaseRef={this.databaseRef}/>
+              )
+            })
+          }
+        </div>
+      <Gallery/>
+			</div>
+			)
+	}
+
 }
 
 
 export default Counter
 
 // This was the submit button
-// <button onClick={() => this.runQuery(this.state.term)} type="button">Submit</button>
+//
