@@ -34,8 +34,10 @@ class Counter extends React.Component {
 		this.databaseRef = this.database.ref().child('haikus');
 		console.log(this.databaseRef);
 
+    console.log(props.user);
+
     this.state = {
-			term: '', wordLine: [], line: 1, sylCount: 0, haikus: [], textVal: "" };
+			term: '', wordLine: [], line: 1, sylCount: 0, haikus: [], textVal: "", user: "" };
 
   }
 
@@ -50,7 +52,8 @@ class Counter extends React.Component {
       })
 
       this.setState({
-        haikus: previousPoems
+        haikus: previousPoems,
+        user: this.props.user.name,
       })
     })
 
@@ -96,7 +99,7 @@ class Counter extends React.Component {
             // if (content.substring(content.length-3 == "ere")){
             //   return 1;
             // }
-            
+
             content = content.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '')
                 .replace(/^y/, '')
                 .match(/[aeiouy]{1,2}/g).length;
@@ -112,9 +115,9 @@ class Counter extends React.Component {
 
               // var wordObj = {
               //   word: arrayOfWords[v],
-              //   syllable:singleSyl              } 
+              //   syllable:singleSyl              }
 
-              // this.state.wordBundle.push(wordObj)  
+              // this.state.wordBundle.push(wordObj)
 
             this.setState({
               // word: arrayOfWords,
@@ -163,14 +166,13 @@ class Counter extends React.Component {
       }
 
   render(){
-
 		return(
 			<div>
 				<textarea
 
         type="text"
         id="term"
-        value={this.state.textVal}
+        // value={this.state.textVal}
         onChange={this.handleChange.bind(this)}
         required
         />
@@ -190,13 +192,13 @@ class Counter extends React.Component {
         <h2>{this.state.sylCount[2]}</h2>
         <h2>{this.state.sylCount[3]}</h2>
       </div>
-      
+
       <div className="poemGallery">
           {
             this.state.haikus.map((haiku) => {
               return (
-                <CounterHaikus haikuContent={haiku.term} 
-                haikuId={haiku.id} 
+                <CounterHaikus haikuContent={haiku.term}
+                haikuId={haiku.id}
                 key={haiku.id}
                 databaseRef={this.databaseRef}
                 loadPoem={this.loadPoem}/>

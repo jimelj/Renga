@@ -47,11 +47,10 @@ class DashboardPage extends React.Component {
    * Render the component.
    */
   render() {
-
     return (
     <div>
     <Dashboard secretData={this.state.secretData} user={this.state.user} />
-    <Counter/>
+    <Counter user={this.state.user}/>
   </div>
     );
 
