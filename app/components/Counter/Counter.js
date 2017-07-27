@@ -16,6 +16,7 @@ class Counter extends React.Component {
   constructor(props) {
     super(props);
 
+    this.loadPoem = this.loadPoem.bind(this);
 
 		var config = {
 		   apiKey: "AIzaSyBsooAPWrtbiK6R1DnW4vWWia3HMj8HiZU",
@@ -34,7 +35,7 @@ class Counter extends React.Component {
 		console.log(this.databaseRef);
 
     this.state = {
-			term: '', wordLine: [], line: 1, sylCount: 0, haikus: [] };
+			term: '', wordLine: [], line: 1, sylCount: 0, haikus: [], textVal: "" };
 
   }
 
@@ -63,6 +64,12 @@ class Counter extends React.Component {
       this.setState({
         haikus: previousPoems
       })
+    })
+  }
+
+  loadPoem(poem){
+    this.setState({
+      textVal: poem
     })
   }
 
@@ -163,7 +170,7 @@ class Counter extends React.Component {
 
         type="text"
         id="term"
-        value={this.state.query}
+        value={this.state.textVal}
         onChange={this.handleChange.bind(this)}
         required
         />
@@ -191,7 +198,8 @@ class Counter extends React.Component {
                 <CounterHaikus haikuContent={haiku.term} 
                 haikuId={haiku.id} 
                 key={haiku.id}
-                databaseRef={this.databaseRef}/>
+                databaseRef={this.databaseRef}
+                loadPoem={this.loadPoem}/>
               )
             })
           }

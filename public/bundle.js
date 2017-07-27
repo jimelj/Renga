@@ -53842,6 +53842,8 @@ var Counter = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Counter.__proto__ || Object.getPrototypeOf(Counter)).call(this, props));
 
+    _this.loadPoem = _this.loadPoem.bind(_this);
+
     var config = {
       apiKey: "AIzaSyBsooAPWrtbiK6R1DnW4vWWia3HMj8HiZU",
       authDomain: "renga-b3c41.firebaseapp.com",
@@ -53859,7 +53861,7 @@ var Counter = function (_React$Component) {
     console.log(_this.databaseRef);
 
     _this.state = {
-      term: '', wordLine: [], line: 1, sylCount: 0, haikus: [] };
+      term: '', wordLine: [], line: 1, sylCount: 0, haikus: [], textVal: "" };
 
     return _this;
   }
@@ -53893,6 +53895,13 @@ var Counter = function (_React$Component) {
         _this2.setState({
           haikus: previousPoems
         });
+      });
+    }
+  }, {
+    key: 'loadPoem',
+    value: function loadPoem(poem) {
+      this.setState({
+        textVal: poem
       });
     }
   }, {
@@ -53988,7 +53997,7 @@ var Counter = function (_React$Component) {
 
           type: 'text',
           id: 'term',
-          value: this.state.query,
+          value: this.state.textVal,
           onChange: this.handleChange.bind(this),
           required: true
         }),
@@ -54055,7 +54064,8 @@ var Counter = function (_React$Component) {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__containers_Haikus_CounterHaikus__["a" /* default */], { haikuContent: haiku.term,
               haikuId: haiku.id,
               key: haiku.id,
-              databaseRef: _this3.databaseRef });
+              databaseRef: _this3.databaseRef,
+              loadPoem: _this3.loadPoem });
           })
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__Gallery_Gallery__["a" /* default */], null)
@@ -62824,7 +62834,7 @@ var CounterHaikus = function (_React$Component) {
 
     _this.haikuContent = props.haikuContent;
     _this.haikuId = props.haikuId;
-
+    _this.sendPoem = _this.sendPoem.bind(_this);
     _this.databaseRef = _this.props.databaseRef;
     _this.updateLocalState = _this.updateLocalState.bind(_this);
 
@@ -62856,6 +62866,11 @@ var CounterHaikus = function (_React$Component) {
       });
     }
   }, {
+    key: 'sendPoem',
+    value: function sendPoem() {
+      this.props.loadPoem(this.haikuContent);
+    }
+  }, {
     key: 'render',
     value: function render() {
 
@@ -62866,6 +62881,11 @@ var CounterHaikus = function (_React$Component) {
           'div',
           { className: 'haikuContent' },
           this.haikuContent
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'button',
+          { onClick: this.sendPoem },
+          'Edit'
         )
       );
     }

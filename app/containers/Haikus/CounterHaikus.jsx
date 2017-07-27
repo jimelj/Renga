@@ -7,8 +7,8 @@ class CounterHaikus extends React.Component {
 	constructor(props) {
     super(props);
     this.haikuContent = props.haikuContent; 
-        this.haikuId = props.haikuId; 
-
+    this.haikuId = props.haikuId; 
+    this.sendPoem = this.sendPoem.bind(this);
     this.databaseRef = this.props.databaseRef;
     this.updateLocalState = this.updateLocalState.bind(this);
 
@@ -35,16 +35,21 @@ class CounterHaikus extends React.Component {
     });
   }
 
+  sendPoem() {
+    this.props.loadPoem(this.haikuContent);
+  }
+
 
 	render(){
 
 		return(
       <div>
         <div className="haikuContent">{this.haikuContent}</div>
+        <button onClick={this.sendPoem}>Edit</button>
       </div>
 			)
 	}
 }
 
 
-export default CounterHaikus
+export default CounterHaikus;
