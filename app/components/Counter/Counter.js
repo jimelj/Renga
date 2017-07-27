@@ -166,21 +166,15 @@ class Counter extends React.Component {
       }
 
   render(){
-<<<<<<< HEAD
-=======
+
     let poemtxt = this.state.textVal;
     console.log(poemtxt);
->>>>>>> 4d22587c42cd4ef2ed544af2692630f35cbf90ca
 		return(
 			<div>
 				<textarea
 
         type="text"
         id="term"
-<<<<<<< HEAD
-        // value={this.state.textVal}
-=======
->>>>>>> 4d22587c42cd4ef2ed544af2692630f35cbf90ca
         onChange={this.handleChange.bind(this)}
         required
         />
