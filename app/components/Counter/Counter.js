@@ -29,10 +29,10 @@ class Counter extends React.Component {
 
 		this.app = firebase.initializeApp(config);
 		this.database = this.app.database();
-		console.log(this.database);
+		// console.log(this.database);
 
 		this.databaseRef = this.database.ref().child('haikus');
-		console.log(this.databaseRef);
+		// console.log(this.databaseRef);
 
     console.log(props.user);
 
@@ -154,32 +154,40 @@ class Counter extends React.Component {
               }
 
   runQuery(word) {
-			console.log(word);
+			// console.log(word);
 			this.setState({
 				haiku: word
 			});
 			let postToSave = this.state
-			console.log(postToSave);
+			// console.log(postToSave);
 			this.databaseRef.push().set(postToSave);
 
 
       }
 
   render(){
+<<<<<<< HEAD
+=======
+    let poemtxt = this.state.textVal;
+    console.log(poemtxt);
+>>>>>>> 4d22587c42cd4ef2ed544af2692630f35cbf90ca
 		return(
 			<div>
 				<textarea
 
         type="text"
         id="term"
+<<<<<<< HEAD
         // value={this.state.textVal}
+=======
+>>>>>>> 4d22587c42cd4ef2ed544af2692630f35cbf90ca
         onChange={this.handleChange.bind(this)}
         required
         />
 
 				<button onClick={() => this.runQuery(this.state.term)} type="button">Submit</button>
 
-        <h2>Current line: {this.state.line}</h2>
+        <h2 className="heading">Current line: {this.state.line}</h2>
 
         <div className="poemLines">
           <h2>{this.state.wordLine[0]}</h2>
@@ -206,7 +214,6 @@ class Counter extends React.Component {
             })
           }
         </div>
-      <Gallery/>
 			</div>
 			)
 	}

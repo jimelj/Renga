@@ -2,11 +2,12 @@ import React from "react";
 import './CounterHaikus.scss';
 
 
-
 class CounterHaikus extends React.Component {
 	constructor(props) {
     super(props);
-    this.haikuContent = props.haikuContent; 
+    this.haikuContent = props.haikuContent;
+    this.haikuLines = props.haikuLines; 
+
     this.haikuId = props.haikuId; 
     this.sendPoem = this.sendPoem.bind(this);
     this.databaseRef = this.props.databaseRef;
@@ -44,8 +45,10 @@ class CounterHaikus extends React.Component {
 
 		return(
       <div>
-        <div className="haikuContent">{this.haikuContent}</div>
-        <button onClick={this.sendPoem}>Edit</button>
+        <div className="haikuWrap">
+          <div className="haikuContent">{this.haikuContent}</div>
+          <button onClick={this.sendPoem}>Edit</button>
+        </div>
       </div>
 			)
 	}
