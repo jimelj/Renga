@@ -177,7 +177,7 @@ class Counter extends React.Component {
 
 				<button onClick={() => this.runQuery(this.state.term)} type="button">Submit</button>
 
-        <h2>Current line: {this.state.line}</h2>
+        <h2 className="heading">Current line: {this.state.line}</h2>
 
         <div className="poemLines">
           <h2>{this.state.wordLine[0]}</h2>
@@ -204,7 +204,6 @@ class Counter extends React.Component {
             })
           }
         </div>
-      <Gallery/>
 			</div>
 			)
 	}
