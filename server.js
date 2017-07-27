@@ -11,7 +11,7 @@ const passport = require('passport');
 const config = require('./config');
 
 // connect to the database and load models
-require('./models').connect(config.dbUri);
+require('./models').connect(process.env.MONGODB_URI);
 
 
 
