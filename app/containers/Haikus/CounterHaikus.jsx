@@ -27,7 +27,7 @@ class CounterHaikus extends React.Component {
 
   updateLocalState(response) {
     const haikus = this.state.haikus;
-    haikus.push(response.haikus);
+    haikus.push(response);
     this.setState({
       haikus: haikus,
     });
@@ -35,10 +35,34 @@ class CounterHaikus extends React.Component {
 
 
 	render(){
-
+		// console.log('hello hahahah', this.state.haikus);
+		let {haikus} = this.state;
+		console.log(haikus.length);
+		console.log('here',haikus);
+		// let resultDiv;
+		// haikus.map(function(haiku, i){
+		// 	return(
+		// 		<div>
+		// 				<div key={i}>
+		// 		        <div className="poemLines">
+		// 		          {/* <h2>{haiku.line}</h2> */}
+		// 							<h1>hi</h1>
+		// 		          {/* <h2>{this.state.wordLine[1]}</h2>
+		// 		          <h2>{this.state.wordLine[2]}</h2> */}
+		// 		        </div>
+		// 		      <div className="sylCount">
+		// 		        {/* <h2>{this.state.sylCount[0]}</h2>
+		// 		        <h2>{this.state.sylCount[1]}</h2>
+		// 		        <h2>{this.state.sylCount[2]}</h2>
+		// 		        <h2>{this.state.sylCount[3]}</h2> */}
+		// 		      </div>
+		// 				</div>
+		// 		</div>
+		// )
+		// })
 		return(
-      <h1>hi</h1>
-			)
+			<h1>hello world</h1>
+		)
 	}
 }
 

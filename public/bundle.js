@@ -62756,56 +62756,81 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 var CounterHaikus = function (_React$Component) {
-  _inherits(CounterHaikus, _React$Component);
+		_inherits(CounterHaikus, _React$Component);
 
-  function CounterHaikus(props) {
-    _classCallCheck(this, CounterHaikus);
+		function CounterHaikus(props) {
+				_classCallCheck(this, CounterHaikus);
 
-    var _this = _possibleConstructorReturn(this, (CounterHaikus.__proto__ || Object.getPrototypeOf(CounterHaikus)).call(this, props));
+				var _this = _possibleConstructorReturn(this, (CounterHaikus.__proto__ || Object.getPrototypeOf(CounterHaikus)).call(this, props));
 
-    _this.databaseRef = _this.props.databaseRef;
-    _this.updateLocalState = _this.updateLocalState.bind(_this);
+				_this.databaseRef = _this.props.databaseRef;
+				_this.updateLocalState = _this.updateLocalState.bind(_this);
 
-    _this.state = {
-      haikus: []
-    };
+				_this.state = {
+						haikus: []
+				};
 
-    return _this;
-  }
+				return _this;
+		}
 
-  _createClass(CounterHaikus, [{
-    key: 'componentWillMount',
-    value: function componentWillMount() {
-      var updateLocalState = this.updateLocalState;
+		_createClass(CounterHaikus, [{
+				key: 'componentWillMount',
+				value: function componentWillMount() {
+						var updateLocalState = this.updateLocalState;
 
-      this.databaseRef.on('child_added', function (snapshot) {
-        var response = snapshot.val();
-        updateLocalState(response);
-        console.log(response);
-      });
-    }
-  }, {
-    key: 'updateLocalState',
-    value: function updateLocalState(response) {
-      var haikus = this.state.haikus;
-      haikus.push(response.haikus);
-      this.setState({
-        haikus: haikus
-      });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
+						this.databaseRef.on('child_added', function (snapshot) {
+								var response = snapshot.val();
+								updateLocalState(response);
+								console.log(response);
+						});
+				}
+		}, {
+				key: 'updateLocalState',
+				value: function updateLocalState(response) {
+						var haikus = this.state.haikus;
+						haikus.push(response);
+						this.setState({
+								haikus: haikus
+						});
+				}
+		}, {
+				key: 'render',
+				value: function render() {
+						// console.log('hello hahahah', this.state.haikus);
+						var haikus = this.state.haikus;
 
-      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'h1',
-        null,
-        'hi'
-      );
-    }
-  }]);
+						console.log(haikus.length);
+						console.log('here', haikus);
+						// let resultDiv;
+						// haikus.map(function(haiku, i){
+						// 	return(
+						// 		<div>
+						// 				<div key={i}>
+						// 		        <div className="poemLines">
+						// 		          {/* <h2>{haiku.line}</h2> */}
+						// 							<h1>hi</h1>
+						// 		          {/* <h2>{this.state.wordLine[1]}</h2>
+						// 		          <h2>{this.state.wordLine[2]}</h2> */}
+						// 		        </div>
+						// 		      <div className="sylCount">
+						// 		        {/* <h2>{this.state.sylCount[0]}</h2>
+						// 		        <h2>{this.state.sylCount[1]}</h2>
+						// 		        <h2>{this.state.sylCount[2]}</h2>
+						// 		        <h2>{this.state.sylCount[3]}</h2> */}
+						// 		      </div>
+						// 				</div>
+						// 		</div>
+						// )
+						// })
+						return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+								'h1',
+								null,
+								'hello world'
+						);
+				}
+		}]);
 
-  return CounterHaikus;
+		return CounterHaikus;
 }(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["a"] = (CounterHaikus);
