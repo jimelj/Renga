@@ -5,8 +5,6 @@ import React from "react";
 // import CounterHaikus from '../../containers/Haikus/CounterHaikus';
 
 
-
-
 class Gallery extends React.Component {
   constructor(props) {
     super(props);
