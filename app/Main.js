@@ -20,6 +20,8 @@ import SignUpPage from './containers/SignUpPage.jsx';
 import DashboardPage from './containers/DashboardPage.jsx';
 import Auth from './modules/Auth';
 
+
+
 // remove tap delay, essential for MaterialUI to work properly
 injectTapEventPlugin();
 
